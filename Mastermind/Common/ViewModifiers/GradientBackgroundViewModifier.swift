@@ -11,6 +11,7 @@ extension View {
     func gradientBackground(_ type: GradientBackgroundModifier.BackgroundType = .base) -> some View {
         modifier(GradientBackgroundModifier(type: type))
     }
+    
 }
 
 // MARK: - View Modifier
@@ -30,6 +31,7 @@ struct GradientBackgroundModifier: ViewModifier {
                 .ignoresSafeArea()
             )
     }
+    
 }
 
 // MARK: - Background Type
