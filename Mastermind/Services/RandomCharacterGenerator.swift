@@ -15,7 +15,6 @@ protocol RandomCharacterGenerating {
 
 struct RandomCharacterGenerator: RandomCharacterGenerating {
     func random(from characters: String) throws -> Character {
-        
         if let randomCharacter = characters.randomElement() {
             return randomCharacter
         } else {
