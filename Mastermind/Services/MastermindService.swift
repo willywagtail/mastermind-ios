@@ -51,7 +51,7 @@ class MastermindService: MastermindServiceProtocol {
         guard let game = currentGame else { throw MastermindServiceError.gameNotFound }
         guard guess.count == sequenceLength else { throw MastermindServiceError.invalidGuessLength }
 
-        let target = Array(game.targetSequence)
+        let target = Array(game.targetSequence.uppercased())
         let guessChars = Array(guess.uppercased())
 
         var states = Array(repeating: CharacterState.initial, count: sequenceLength)
@@ -110,7 +110,7 @@ class MastermindService: MastermindServiceProtocol {
         for _ in 0..<sequenceLength {
             try sequence.append(randomCharacterGenerator.random(from: allowedCharacters))
         }
-        return sequence
+        return sequence.uppercased()
     }
     
 }

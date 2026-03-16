@@ -10,7 +10,7 @@ struct MastermindGame {
     let timeInSeconds: Int
     
     init(targetSequence: String, timeInSeconds: Int) {
-        self.targetSequence = targetSequence.uppercased()
+        self.targetSequence = targetSequence
         self.timeInSeconds = timeInSeconds
     }
     
