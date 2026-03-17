@@ -9,13 +9,34 @@ import SwiftUI
 
 struct MastermindGameStateView: View {
     
+    // MARK: - ViewModel
+    
+    @StateObject var viewModel: MastermindGameStateViewModel
+    
     // MARK: - Body
     
     var body: some View {
-        VStack(alignment: .center) {
-            Text("TODO")
+        Group {
+            switch viewModel.gameState {
+            case .playing(let mastermindGame):
+                MastermindGamePlayView(viewModel: viewModel.factory.makeMastermindGamePlayViewModel(mastermindGame: mastermindGame, validateCallback: viewModel.validateTapped))
+                    .transition(.opacity)
+            case .success(let solution):
+                MastermindSuccessView(didTapPlayAgain: viewModel.restartTapped, solution: solution)
+                    .transition(.opacity)
+            case .fail:
+                // TODO: Implement failure state
+                Text("Failure:")
+                    .transition(.opacity)
+            case .loading:
+                ProgressView()
+                    .gradientBackground()
+                    .transition(.opacity)
+            }
+            
         }
-        .gradientBackground()
+        .onAppear(perform: viewModel.onAppear)
+        .animation(.easeInOut(duration: 0.3), value: viewModel.gameState)
     }
     
 }

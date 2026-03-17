@@ -20,7 +20,7 @@ private struct CustomButtonStyle: PrimitiveButtonStyle {
     let type: ButtonType
     let scaleWidthToFill: Bool
     
-    func makeBody(configuration: Configuration) -> some View {
+    func makeBody(configuration: PrimitiveButtonStyle.Configuration) -> some View {
         CustomButton(configuration: configuration, type: type, scaleWidthToFill: scaleWidthToFill)
     }
 }
@@ -28,8 +28,11 @@ private struct CustomButtonStyle: PrimitiveButtonStyle {
 // MARK: - Button View
 
 private struct CustomButton: View {
+    // MARK: - Environment
     
     @Environment(\.isEnabled) private var isEnabled
+    
+    // MARK: - Properties
     
     let configuration: PrimitiveButtonStyle.Configuration
     let type: ButtonType
@@ -46,6 +49,8 @@ private struct CustomButton: View {
     private var borderColor: Color {
         isEnabled ? type.borderColor : type.disabledBorderColor
     }
+    
+    // MARK: - Body
     
     var body: some View {
         Button(role: configuration.role, action: configuration.trigger) {

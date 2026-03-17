@@ -17,7 +17,11 @@ extension View {
 // MARK: - View Modifier
 
 struct GradientBackgroundModifier: ViewModifier {
+    // MARK: - Properties
+    
     let type: BackgroundType
+    
+    // MARK: - Body
     
     func body(content: Content) -> some View {
         content
