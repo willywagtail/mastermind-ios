@@ -81,6 +81,7 @@ struct CharacterInputView: View {
     let displayStates: [CharacterState]
     var onInputChanged: (([Character]) -> Void)?
     var onAllFilled: ((Bool) -> Void)?
+    var onCharacterCleared: ((Int) -> Void)?
     let readOnly: Bool
     
     // MARK: - Body
@@ -163,9 +164,11 @@ struct CharacterInputView: View {
 
         if letters[focusedIndex] != nil {
             letters[focusedIndex] = nil
+            onCharacterCleared?(focusedIndex)
         } else if focusedIndex > 0 {
             focusedIndex -= 1
             letters[focusedIndex] = nil
+            onCharacterCleared?(focusedIndex)
         }
 
         notifyCallbacks()
@@ -193,7 +196,7 @@ struct CharacterInputView: View {
         case .correct: .backgroundSuccess.opacity(0.8)
         case .contains: .backgroundWarning.opacity(0.8)
         case .notCorrect: .backgroundFailure.opacity(0.8)
-        case .neutral: .backgroundNeutral.opacity(0.5)
+        case .neutral: .backgroundNeutral.opacity(0.8)
         }
     }
 

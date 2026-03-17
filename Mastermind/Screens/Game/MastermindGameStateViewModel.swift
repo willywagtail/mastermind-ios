@@ -13,6 +13,7 @@ class MastermindGameStateViewModel: ObservableObject {
     // MARK: - Published
     
     @Published var gameState: GameState = .loading
+    @Published var showAlert = false
     
     // MARK: - Properties
     
@@ -36,7 +37,7 @@ class MastermindGameStateViewModel: ObservableObject {
             let mastermindGame = try mastermindService.newGame()
             gameState = .playing(mastermindGame)
         } catch {
-            // TODO: Add alert
+            showAlert = true
         }
     }
     
@@ -48,8 +49,8 @@ class MastermindGameStateViewModel: ObservableObject {
             }
             return result
         } catch {
+            showAlert = true
             return nil
-            // TODO: Add alert
         }
     }
     
@@ -58,13 +59,13 @@ class MastermindGameStateViewModel: ObservableObject {
             let mastermindGame = try mastermindService.newGame()
             gameState = .playing(mastermindGame)
         } catch {
-            // TODO: Add alert
+            showAlert = true
         }
     }
     
     func stopGame() {
         let solution = mastermindService.stopGame()
-        gameState = .fail(solution)
+        gameState = .failure(solution)
     }
     
 }

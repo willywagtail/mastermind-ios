@@ -17,6 +17,7 @@ class MastermindGamePlayViewModel: ObservableObject {
     
     // MARK: - Properties
     
+    let totalSeconds: Int
     private var inputCharacters: [Character]
     private let validateCallback: (String) -> ValidationResult?
     private let timeExpiredCallback: (() -> Void)
@@ -35,13 +36,14 @@ class MastermindGamePlayViewModel: ObservableObject {
     // MARK: - Lifecycle
     
     init(
-        game: MastermindGame,
+        mastermindGame: MastermindGame,
         timeExpiredCallback: @escaping () -> Void,
         validateCallback: @escaping (String) -> ValidationResult?
     ) {
-        self.displayStates = game.characterStates
-        self.inputCharacters = game.characterStates.map { $0.character }
-        self.remainingSeconds = game.timeInSeconds
+        self.displayStates = mastermindGame.characterStates
+        self.inputCharacters = mastermindGame.characterStates.map { $0.character }
+        self.totalSeconds = mastermindGame.timeInSeconds
+        self.remainingSeconds = mastermindGame.timeInSeconds
         self.timeExpiredCallback = timeExpiredCallback
         self.validateCallback = validateCallback
     }
@@ -72,6 +74,11 @@ class MastermindGamePlayViewModel: ObservableObject {
     
     func updateInputCharacters(_ characters: [Character]) {
         inputCharacters = characters
+    }
+    
+    func clearCharacterState(at index: Int) {
+        guard displayStates.indices.contains(index) else { return }
+        displayStates[index] = .neutral(Character(" "))
     }
     
     func validateTapped() {

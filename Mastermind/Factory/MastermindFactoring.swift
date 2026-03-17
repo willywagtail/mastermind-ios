@@ -16,7 +16,7 @@ extension Factory: MastermindFactoring {
     }
     
     func makeMastermindGamePlayViewModel(mastermindGame: MastermindGame, timeExpiredCallback: @escaping () -> Void, validateCallback: @escaping (String) -> ValidationResult?) -> MastermindGamePlayViewModel {
-        return MastermindGamePlayViewModel(game: mastermindGame, timeExpiredCallback: timeExpiredCallback, validateCallback: validateCallback)
+        return MastermindGamePlayViewModel(mastermindGame: mastermindGame, timeExpiredCallback: timeExpiredCallback, validateCallback: validateCallback)
     }
     
 }

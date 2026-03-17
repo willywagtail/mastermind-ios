@@ -7,28 +7,28 @@
 
 import SwiftUI
 
-struct MastermindSuccessView: View {
+struct MastermindResultView: View {
     // MARK: - Properties
     
     let didTapPlayAgain: () -> Void
-    let solution: ValidationResult
+    let result: ResultType
     
     // MARK: - Body
     
     var body: some View {
         VStack(alignment: .center, spacing: 24) {
             Spacer()
-                .frame(height: 72)
+                .frame(height: 40)
             
-            Text(.successYouWonLabel)
+            Text(result.title)
                 .foregroundStyle(.foreground)
-                .font(.largeTitle)
+                .font(.system(size: 72, weight: .bold))
                 .multilineTextAlignment(.center)
-            
-            Text("🎉")
+                
+            Text(result.emoji)
                 .font(.system(size: 72))
             
-            CharacterInputView(displayStates: solution.states,
+            CharacterInputView(displayStates: result.neutralResultStates,
                                readOnly: true)
             
             Spacer()
@@ -40,7 +40,42 @@ struct MastermindSuccessView: View {
             
         }
         .padding([.vertical, .horizontal])
-        .gradientBackground(.success)
+        .gradientBackground(result.backgroundGradientType)
+    }
+    
+}
+
+extension MastermindResultView {
+    enum ResultType {
+        case success(ValidationResult)
+        case failure(ValidationResult)
+        
+        var title: LocalizedStringResource {
+            switch self {
+            case .success: .successTitleLabel
+            case .failure: .failureTitleLabel
+            }
+        }
+        
+        var backgroundGradientType: GradientBackgroundModifier.BackgroundType {
+            switch self {
+            case .success: .success
+            case .failure: .failure
+            }
+        }
+        
+        var emoji: String {
+            switch self {
+            case .success: "🎉"
+            case .failure: "😭"
+            }
+        }
+        
+        var neutralResultStates: [CharacterState] {
+            switch self {
+            case .success(let validationResult), .failure(let validationResult): validationResult.neutralResult
+            }
+        }
     }
     
 }

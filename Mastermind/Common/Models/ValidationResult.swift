@@ -14,4 +14,8 @@ extension ValidationResult {
         states.allSatisfy { $0.isCorrect }
     }
     
+    var neutralResult: [CharacterState] {
+        states.map { CharacterState.neutral($0.character) }
+    }
+    
 }
