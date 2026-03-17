@@ -24,7 +24,7 @@ struct MastermindLandingView: View {
             
             Spacer()
             
-            NavigationLink(value: MastermindRoute.game) {
+            NavigationLink(value: MastermindRoute.playGame) {
                 Text(.homeStartButton)
             }
             .accessibilityLabel(.homeStartButtonAccessibilityLabel)

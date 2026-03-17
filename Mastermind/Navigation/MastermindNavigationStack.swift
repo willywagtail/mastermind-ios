@@ -23,9 +23,8 @@ struct MastermindNavigationStack: View {
             // MARK: - MastermindRoute
                 .navigationDestination(for: MastermindRoute.self) { route in
                     switch route {
-                    case .game:
-                        MastermindGameStateView()
-                            .navigationBarBackButtonHidden(true)
+                    case .playGame:
+                        MastermindGameStateView(viewModel: Factory.shared.makeMastermindGameStateViewModel())
                     }
                 }
         }

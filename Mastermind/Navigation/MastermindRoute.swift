@@ -6,5 +6,5 @@
 //
 
 enum MastermindRoute: Hashable {
-    case game
+    case playGame
 }

@@ -6,15 +6,14 @@
 //
 
 enum CharacterState: Equatable {
-    case initial
+    case neutral(Character)
     case correct(Character)
     case contains(Character)
     case notCorrect(Character)
     
     var character: Character {
         switch self {
-        case .initial: return " "
-        case .correct(let char), .contains(let char), .notCorrect(let char): return char
+        case .neutral(let char), .correct(let char), .contains(let char), .notCorrect(let char): return char
         }
     }
     

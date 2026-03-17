@@ -5,8 +5,9 @@
 //  Created by Stijn Ergeerts on 15/03/2026.
 //
 
-enum GameState {
-    case playing
-    case success
-    case fail
+enum GameState: Equatable {
+    case playing(MastermindGame)
+    case success(ValidationResult)
+    case fail(ValidationResult)
+    case loading
 }

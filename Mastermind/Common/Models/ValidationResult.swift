@@ -5,7 +5,7 @@
 //  Created by Stijn Ergeerts on 16/03/2026.
 //
 
-struct ValidationResult {
+struct ValidationResult: Equatable {
     let states: [CharacterState]
     
     init(states: [CharacterState]) {

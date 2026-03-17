@@ -13,32 +13,33 @@ enum MastermindServiceError: Error {
     case validationFailed
 }
 
-protocol MastermindServiceProtocol {
+protocol MastermindServicing {
     func newGame() throws -> MastermindGame
-    func validate(guess: String) throws-> ValidationResult
+    func validate(guess: String) throws -> ValidationResult
+    func stopGame() -> ValidationResult
 }
 
 // MARK: - Mastermind Service
 
-class MastermindService: MastermindServiceProtocol {
+class MastermindService: MastermindServicing {
     
     // MARK: - Private Properties
     
+    private let allowedCharacters: String
     private var currentGame: MastermindGame?
     private let randomCharacterGenerator: RandomCharacterGenerating
-    private let allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    private let numberOfCharacters: Int
     private let timeInSeconds: Int
-    private let sequenceLength: Int
     
     // MARK: - Init
     
     init(
-        timeInSeconds: Int = 60,
-        sequenceLength: Int = 4,
+        configuration: Configuring,
         randomCharacterGenerator: RandomCharacterGenerating
     ) {
-        self.timeInSeconds = timeInSeconds
-        self.sequenceLength = sequenceLength
+        self.allowedCharacters = configuration.allowedCharacters
+        self.numberOfCharacters = configuration.numberOfCharacters
+        self.timeInSeconds = configuration.timeInSeconds
         self.randomCharacterGenerator = randomCharacterGenerator
     }
     
@@ -46,15 +47,15 @@ class MastermindService: MastermindServiceProtocol {
     
     /// Validates the user's guess against the target sequence
     /// - Parameter guess: The character string guessed by the user
-    /// - Returns: ValidationResult containing array of CharacterStates and win status
+    /// - Returns: ValidationResult containing array of CharacterStates and computed success status
     func validate(guess: String) throws -> ValidationResult {
         guard let game = currentGame else { throw MastermindServiceError.gameNotFound }
-        guard guess.count == sequenceLength else { throw MastermindServiceError.invalidGuessLength }
+        guard guess.count == numberOfCharacters else { throw MastermindServiceError.invalidGuessLength }
 
         let target = Array(game.targetSequence.uppercased())
         let guessChars = Array(guess.uppercased())
 
-        var states = Array(repeating: CharacterState.initial, count: sequenceLength)
+        var states = Array(repeating: CharacterState.neutral(" "), count: numberOfCharacters)
         var counts: [Character: Int] = [:]
         
         // Create frequency dictionary
@@ -63,7 +64,7 @@ class MastermindService: MastermindServiceProtocol {
         }
 
         // Check 1: .correct
-        for i in 0..<sequenceLength {
+        for i in 0..<numberOfCharacters {
             if guessChars[i] == target[i] {
                 states[i] = .correct(guessChars[i])
                 counts[guessChars[i], default: 0] -= 1
@@ -71,7 +72,7 @@ class MastermindService: MastermindServiceProtocol {
         }
 
         // Chack 2: .contains or .notCorrect
-        for i in 0..<sequenceLength {
+        for i in 0..<numberOfCharacters {
             let char = guessChars[i]
 
             if case .correct = states[i] { continue }
@@ -84,7 +85,7 @@ class MastermindService: MastermindServiceProtocol {
             }
         }
         
-        guard !states.contains(.initial) else { throw MastermindServiceError.validationFailed }
+        guard !states.contains(where: { if case .neutral = $0 { return true } else { return false } }) else { throw MastermindServiceError.validationFailed }
         return ValidationResult(states: states)
     }
     
@@ -92,22 +93,37 @@ class MastermindService: MastermindServiceProtocol {
     /// Can be used both for initial game start and restart
     /// - Returns: New MastermindGame instance with fresh sequence and time
     func newGame() throws -> MastermindGame {
-        let game = MastermindGame(
+        let initialState = Array(
+            repeating: CharacterState.neutral(" "),
+            count: numberOfCharacters
+        )
+        
+        let mastermindGame = MastermindGame(
+            characterStates: initialState,
             targetSequence: try generateSequence(),
             timeInSeconds: timeInSeconds
         )
-        currentGame = game
+        currentGame = mastermindGame
         
-        print("New game started with target sequence: \(game.targetSequence)")
+        print("New game started with target sequence: \(mastermindGame.targetSequence)")
         
-        return game
+        return mastermindGame
+    }
+    
+    /// Stops the current MastermindGame and deallocates it
+    /// - Returns: The correct sequence in a ValidationResult
+    func stopGame() -> ValidationResult {
+        defer { currentGame = nil }
+        let solution = currentGame?.targetSequence.map { CharacterState.correct($0) } ?? []
+        return ValidationResult(states: solution)
+        
     }
     
     // MARK: - Private Functions
     
     private func generateSequence() throws -> String {
         var sequence = ""
-        for _ in 0..<sequenceLength {
+        for _ in 0..<numberOfCharacters {
             try sequence.append(randomCharacterGenerator.random(from: allowedCharacters))
         }
         return sequence.uppercased()
