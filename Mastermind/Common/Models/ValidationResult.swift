@@ -7,11 +7,6 @@
 
 struct ValidationResult: Equatable {
     let states: [CharacterState]
-    
-    init(states: [CharacterState]) {
-        self.states = states
-    }
-    
 }
 
 extension ValidationResult {

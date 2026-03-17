@@ -64,11 +64,9 @@ class MastermindService: MastermindServicing {
         }
 
         // Check 1: .correct
-        for i in 0..<numberOfCharacters {
-            if guessChars[i] == target[i] {
-                states[i] = .correct(guessChars[i])
-                counts[guessChars[i], default: 0] -= 1
-            }
+        for i in 0..<numberOfCharacters where guessChars[i] == target[i] {
+            states[i] = .correct(guessChars[i])
+            counts[guessChars[i], default: 0] -= 1
         }
 
         // Chack 2: .contains or .notCorrect

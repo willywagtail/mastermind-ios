@@ -64,6 +64,7 @@ private struct KeyInputRepresentable: UIViewRepresentable {
             DispatchQueue.main.async { uiView.resignFirstResponder() }
         }
     }
+    
 }
 
 // MARK: - CharacterInputView
@@ -192,7 +193,7 @@ struct CharacterInputView: View {
         case .correct: .backgroundSuccess.opacity(0.8)
         case .contains: .backgroundWarning.opacity(0.8)
         case .notCorrect: .backgroundFailure.opacity(0.8)
-        case .neutral: .backgroundPrimary.opacity(0.5)
+        case .neutral: .backgroundNeutral.opacity(0.5)
         }
     }
 
@@ -209,5 +210,5 @@ struct CharacterInputView: View {
             return "Position \(index + 1): empty"
         }
     }
+    
 }
-

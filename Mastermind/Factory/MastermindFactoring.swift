@@ -7,8 +7,7 @@
 
 protocol MastermindFactoring {
     func makeMastermindGameStateViewModel() -> MastermindGameStateViewModel
-    func makeMastermindGamePlayViewModel(mastermindGame: MastermindGame, validateCallback: @escaping (String) -> ValidationResult?
-    ) -> MastermindGamePlayViewModel
+    func makeMastermindGamePlayViewModel(mastermindGame: MastermindGame, timeExpiredCallback: @escaping () -> Void, validateCallback: @escaping (String) -> ValidationResult?) -> MastermindGamePlayViewModel
 }
 
 extension Factory: MastermindFactoring {
@@ -16,8 +15,8 @@ extension Factory: MastermindFactoring {
         MastermindGameStateViewModel(factory: self, mastermindService: mastermindService)
     }
     
-    func makeMastermindGamePlayViewModel(mastermindGame: MastermindGame, validateCallback: @escaping (String) -> ValidationResult?) -> MastermindGamePlayViewModel {
-        return MastermindGamePlayViewModel(game: mastermindGame, validateCallback: validateCallback)
+    func makeMastermindGamePlayViewModel(mastermindGame: MastermindGame, timeExpiredCallback: @escaping () -> Void, validateCallback: @escaping (String) -> ValidationResult?) -> MastermindGamePlayViewModel {
+        return MastermindGamePlayViewModel(game: mastermindGame, timeExpiredCallback: timeExpiredCallback, validateCallback: validateCallback)
     }
     
 }

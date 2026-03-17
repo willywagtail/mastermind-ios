@@ -21,7 +21,14 @@ struct MastermindGamePlayView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 12) {
             Spacer()
-                .frame(maxHeight: 42)
+                .frame(maxHeight: 72)
+            
+            Text("\(viewModel.remainingSeconds)")
+                .font(.system(size: 32, weight: .bold))
+                .foregroundStyle(viewModel.remainingSeconds <= 10 ? .foregroundDanger : .foregroundPrimary)
+
+            Spacer()
+                .frame(maxHeight: 60)
 
             CharacterInputView(
                 displayStates: viewModel.displayStates,
@@ -42,6 +49,7 @@ struct MastermindGamePlayView: View {
             .disabled(!isValidateButtonEnabled)
             .customButtonStyle()
         }
+        .onAppear(perform: viewModel.onAppear)
         .padding([.vertical, .horizontal])
         .gradientBackground()
     }
