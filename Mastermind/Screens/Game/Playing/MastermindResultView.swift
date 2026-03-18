@@ -1,5 +1,5 @@
 //
-//  MastermindSuccessView.swift
+//  MastermindResultView.swift
 //  Mastermind
 //
 //  Created by Stijn Ergeerts on 16/03/2026.
@@ -13,6 +13,10 @@ struct MastermindResultView: View {
     let didTapPlayAgain: () -> Void
     let result: ResultType
     
+    // MARK: - State
+    
+    @AccessibilityFocusState private var isTitleFocused: Bool
+    
     // MARK: - Body
     
     var body: some View {
@@ -21,12 +25,15 @@ struct MastermindResultView: View {
                 .frame(height: 32)
             
             Text(result.title)
-                .foregroundStyle(.foreground)
+                .foregroundStyle(.foregroundPrimary)
                 .font(.system(size: 52, weight: .bold))
                 .multilineTextAlignment(.center)
+                .accessibilitySortPriority(1)
+                .accessibilityFocused($isTitleFocused)
                 
             Text(result.emoji)
                 .font(.system(size: 72))
+                .accessibilityHidden(true)
             
             CharacterInputView(displayStates: result.neutralResultStates,
                                readOnly: true)
@@ -41,6 +48,7 @@ struct MastermindResultView: View {
         }
         .padding([.vertical, .horizontal])
         .gradientBackground(result.backgroundGradientType)
+        .task { isTitleFocused = true }
     }
     
 }
