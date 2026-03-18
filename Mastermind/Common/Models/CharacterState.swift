@@ -22,4 +22,9 @@ enum CharacterState: Equatable, Hashable {
         return false
     }
     
+    var isNeutral: Bool {
+        if case .neutral = self { return true }
+        return false
+    }
+    
 }

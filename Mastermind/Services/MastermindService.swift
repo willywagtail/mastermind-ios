@@ -10,7 +10,7 @@ import Foundation
 enum MastermindServiceError: Error {
     case gameNotFound
     case invalidGuessLength
-    case validationFailed
+
 }
 
 protocol MastermingLifecycleServicing {
@@ -61,11 +61,8 @@ class MastermindService: MastermindServicing {
         let guessChars = Array(guess.uppercased())
 
         var states = Array(repeating: CharacterState.neutral(" "), count: numberOfCharacters)
-        var counts: [Character: Int] = [:]
-        
-        // Create frequency dictionary
-        for char in target {
-            counts[char, default: 0] += 1
+        var counts = target.reduce(into: [:]) { counts, character in
+            counts[character, default: 0] += 1
         }
 
         // Check 1: .correct
@@ -74,7 +71,7 @@ class MastermindService: MastermindServicing {
             counts[guessChars[i], default: 0] -= 1
         }
 
-        // Chack 2: .contains or .notCorrect
+        // Check 2: .contains or .notCorrect
         for i in 0..<numberOfCharacters {
             let char = guessChars[i]
 
@@ -87,8 +84,7 @@ class MastermindService: MastermindServicing {
                 states[i] = .notCorrect(char)
             }
         }
-        
-        guard !states.contains(where: { if case .neutral = $0 { return true } else { return false } }) else { throw MastermindServiceError.validationFailed }
+
         return ValidationResult(states: states)
     }
     

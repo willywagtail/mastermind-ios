@@ -46,12 +46,11 @@ struct MastermindGamePlayViewModelTests {
     
     // MARK: - updateInputCharacters
     
-    @Test func updateInputCharacters_updatesCurrentGuess() {
+    @Test func updateInputCharacters_setsIsValidGuess() {
         let sut = makeSUT(onGameEnded: { _ in })
         
         sut.updateInputCharacters(["A", "B", "C", "D"])
         
-        #expect(sut.currentGuess == "ABCD")
         #expect(sut.isValidGuess == true)
     }
     

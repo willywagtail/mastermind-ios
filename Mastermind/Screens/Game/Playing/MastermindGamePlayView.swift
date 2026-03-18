@@ -12,10 +12,6 @@ struct MastermindGamePlayView: View {
     
     @StateObject var viewModel: MastermindGamePlayViewModel
     
-    // MARK: - State
-    
-    @State private var isValidateButtonEnabled = false
-    
     // MARK: - Body
     
     var body: some View {
@@ -37,9 +33,6 @@ struct MastermindGamePlayView: View {
                 onInputChanged: { characters in
                     viewModel.updateInputCharacters(characters)
                 },
-                onAllFilled: { isComplete in
-                    isValidateButtonEnabled = isComplete
-                },
                 onCharacterCleared: { index in
                     viewModel.clearCharacterState(at: index)
                 },
@@ -51,7 +44,7 @@ struct MastermindGamePlayView: View {
             Button(.gameValidateButton) {
                 viewModel.validateTapped()
             }
-            .disabled(!isValidateButtonEnabled)
+            .disabled(!viewModel.isValidGuess)
             .customButtonStyle()
         }
         .onAppear(perform: viewModel.onAppear)
