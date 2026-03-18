@@ -44,13 +44,13 @@ extension GradientBackgroundModifier {
     enum BackgroundType {
         case base
         case success
-        case fail
+        case failure
         
         private var baseColor: Color {
             switch self {
             case .base: .backgroundPrimary
             case .success: .backgroundSuccess
-            case .fail: .backgroundFailure
+            case .failure: .backgroundFailure
             }
         }
         
@@ -60,4 +60,3 @@ extension GradientBackgroundModifier {
     }
     
 }
-

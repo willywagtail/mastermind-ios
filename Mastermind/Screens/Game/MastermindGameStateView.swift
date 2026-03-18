@@ -19,14 +19,20 @@ struct MastermindGameStateView: View {
         Group {
             switch viewModel.gameState {
             case .playing(let mastermindGame):
-                MastermindGamePlayView(viewModel: viewModel.factory.makeMastermindGamePlayViewModel(mastermindGame: mastermindGame, validateCallback: viewModel.validateTapped))
+                MastermindGamePlayView(
+                    viewModel: viewModel.factory.makeMastermindGamePlayViewModel(
+                        mastermindGame: mastermindGame,
+                        onGameEnded: viewModel.handleGameResult
+                    )
+                )
+                .id(mastermindGame)
+                .transition(.opacity)
+                
+            case .success(let result):
+                MastermindResultView(didTapPlayAgain: viewModel.restartTapped, result: .success(result))
                     .transition(.opacity)
-            case .success(let solution):
-                MastermindSuccessView(didTapPlayAgain: viewModel.restartTapped, solution: solution)
-                    .transition(.opacity)
-            case .fail:
-                // TODO: Implement failure state
-                Text("Failure:")
+            case .failure(let result):
+                MastermindResultView(didTapPlayAgain: viewModel.restartTapped, result: .failure(result))
                     .transition(.opacity)
             case .loading:
                 ProgressView()
@@ -37,6 +43,11 @@ struct MastermindGameStateView: View {
         }
         .onAppear(perform: viewModel.onAppear)
         .animation(.easeInOut(duration: 0.3), value: viewModel.gameState)
+        .alert(.alertTitleLabel, isPresented: $viewModel.showAlert) {
+            Button(.alertActionLabel) {
+                viewModel.restartTapped()
+            }
+        }
     }
     
 }

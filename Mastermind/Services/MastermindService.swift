@@ -13,11 +13,16 @@ enum MastermindServiceError: Error {
     case validationFailed
 }
 
-protocol MastermindServicing {
+protocol MastermingLifecycleServicing {
     func newGame() throws -> MastermindGame
-    func validate(guess: String) throws -> ValidationResult
     func stopGame() -> ValidationResult
 }
+
+protocol MastermindValidationServicing {
+    func validate(guess: String) throws -> ValidationResult
+}
+
+typealias MastermindServicing = MastermingLifecycleServicing & MastermindValidationServicing
 
 // MARK: - Mastermind Service
 
@@ -64,11 +69,9 @@ class MastermindService: MastermindServicing {
         }
 
         // Check 1: .correct
-        for i in 0..<numberOfCharacters {
-            if guessChars[i] == target[i] {
-                states[i] = .correct(guessChars[i])
-                counts[guessChars[i], default: 0] -= 1
-            }
+        for i in 0..<numberOfCharacters where guessChars[i] == target[i] {
+            states[i] = .correct(guessChars[i])
+            counts[guessChars[i], default: 0] -= 1
         }
 
         // Chack 2: .contains or .notCorrect

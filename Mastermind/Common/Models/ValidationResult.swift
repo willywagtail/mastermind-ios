@@ -7,16 +7,15 @@
 
 struct ValidationResult: Equatable {
     let states: [CharacterState]
-    
-    init(states: [CharacterState]) {
-        self.states = states
-    }
-    
 }
 
 extension ValidationResult {
     var isSuccess: Bool {
         states.allSatisfy { $0.isCorrect }
+    }
+    
+    var neutralResult: [CharacterState] {
+        states.map { CharacterState.neutral($0.character) }
     }
     
 }

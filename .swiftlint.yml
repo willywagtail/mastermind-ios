@@ -1,0 +1,47 @@
+opt_in_rules:
+- empty_count
+- empty_string
+- overridden_super_call
+- first_where
+
+disabled_rules:
+- inclusive_language # because of "master" in Mastermind
+- trailing_whitespace
+- identifier_name
+- multiple_closures_with_trailing_closure # We will have this a lot with SwiftUI
+
+custom_rules:
+    use_weak_not_unowned:
+        name: "Use weak, not unowned."
+        regex: "\\[unowned\\s+self\\]"
+
+type_name:
+  min_length: 2
+  max_length: 50
+
+line_length:
+- 300 # warning
+
+file_length: 600
+
+type_body_length:
+- 450 # warning
+- 700 # error
+
+function_body_length: 100
+
+nesting:
+  type_level: 3
+
+large_tuple:
+- 4 # warning
+
+cyclomatic_complexity:
+  ignores_case_statements: true
+
+excluded:
+  - .git
+  - .build # output from swift package manager (SPM)
+  - BuildTools/.build # output from scripts build with SPM
+  - Packages/**/.build
+  - DerivedData

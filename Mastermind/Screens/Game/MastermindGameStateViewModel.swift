@@ -5,66 +5,60 @@
 //  Created by Stijn Ergeerts on 16/03/2026.
 //
 
-import Combine
 import Foundation
+import Combine
 
 @MainActor
 class MastermindGameStateViewModel: ObservableObject {
     // MARK: - Published
     
     @Published var gameState: GameState = .loading
+    @Published var showAlert = false
     
     // MARK: - Properties
     
     let factory: MastermindFactoring
-    private let mastermindService: MastermindServicing
+    private let mastermindLifecycleService: MastermingLifecycleServicing
     
     // MARK: - Lifecycle
     
     init(
         factory: MastermindFactoring,
-        mastermindService: MastermindServicing
+        mastermindLifecycleService: MastermingLifecycleServicing
     ) {
         self.factory = factory
-        self.mastermindService = mastermindService
+        self.mastermindLifecycleService = mastermindLifecycleService
     }
     
     // MARK: - Internal
     
     func onAppear() {
-        do {
-            let mastermindGame = try mastermindService.newGame()
-            gameState = .playing(mastermindGame)
-        } catch {
-            // TODO: Add alert
-        }
+        startNewGame()
     }
     
-    func validateTapped(guess: String) -> ValidationResult? {
-        do {
-            let result = try mastermindService.validate(guess: guess)
-            if result.isSuccess {
-                gameState = .success(result)
-            }
-            return result
-        } catch {
-            return nil
-            // TODO: Add alert
+    func handleGameResult(_ result: GameResult) {
+        let solution = mastermindLifecycleService.stopGame()
+        switch result {
+        case .success:
+            gameState = .success(solution)
+        case .timeExpired:
+            gameState = .failure(solution)
         }
     }
     
     func restartTapped() {
-        do {
-            let mastermindGame = try mastermindService.newGame()
-            gameState = .playing(mastermindGame)
-        } catch {
-            // TODO: Add alert
-        }
+        startNewGame()
     }
     
-    func stopGame() {
-        let solution = mastermindService.stopGame()
-        gameState = .fail(solution)
+    // MARK: - Private
+    
+    private func startNewGame() {
+        do {
+            let mastermindGame = try mastermindLifecycleService.newGame()
+            gameState = .playing(mastermindGame)
+        } catch {
+            showAlert = true
+        }
     }
     
 }

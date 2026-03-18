@@ -8,6 +8,6 @@
 enum GameState: Equatable {
     case playing(MastermindGame)
     case success(ValidationResult)
-    case fail(ValidationResult)
+    case failure(ValidationResult)
     case loading
 }

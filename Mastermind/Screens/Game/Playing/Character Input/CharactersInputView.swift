@@ -64,6 +64,7 @@ private struct KeyInputRepresentable: UIViewRepresentable {
             DispatchQueue.main.async { uiView.resignFirstResponder() }
         }
     }
+    
 }
 
 // MARK: - CharacterInputView
@@ -80,6 +81,7 @@ struct CharacterInputView: View {
     let displayStates: [CharacterState]
     var onInputChanged: (([Character]) -> Void)?
     var onAllFilled: ((Bool) -> Void)?
+    var onCharacterCleared: ((Int) -> Void)?
     let readOnly: Bool
     
     // MARK: - Body
@@ -115,7 +117,10 @@ struct CharacterInputView: View {
         .onChange(of: displayStates) { newStates in
             guard isValidationResult(newStates) else { return }
             letters = newStates.map { $0.character }
-            keyboardActive = false
+            
+            if newStates.allSatisfy(\.isCorrect) {
+                keyboardActive = false
+            }
         }
     }
 
@@ -162,9 +167,11 @@ struct CharacterInputView: View {
 
         if letters[focusedIndex] != nil {
             letters[focusedIndex] = nil
+            onCharacterCleared?(focusedIndex)
         } else if focusedIndex > 0 {
             focusedIndex -= 1
             letters[focusedIndex] = nil
+            onCharacterCleared?(focusedIndex)
         }
 
         notifyCallbacks()
@@ -192,7 +199,7 @@ struct CharacterInputView: View {
         case .correct: .backgroundSuccess.opacity(0.8)
         case .contains: .backgroundWarning.opacity(0.8)
         case .notCorrect: .backgroundFailure.opacity(0.8)
-        case .neutral: .backgroundPrimary.opacity(0.5)
+        case .neutral: .backgroundNeutral.opacity(0.8)
         }
     }
 
@@ -209,5 +216,5 @@ struct CharacterInputView: View {
             return "Position \(index + 1): empty"
         }
     }
+    
 }
-

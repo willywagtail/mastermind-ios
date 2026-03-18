@@ -21,7 +21,15 @@ struct MastermindGamePlayView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 12) {
             Spacer()
-                .frame(maxHeight: 42)
+                .frame(maxHeight: 44)
+            
+            CountdownView(
+                remainingSeconds: viewModel.remainingSeconds,
+                totalSeconds: viewModel.totalSeconds
+            )
+
+            Spacer()
+                .frame(maxHeight: 60)
 
             CharacterInputView(
                 displayStates: viewModel.displayStates,
@@ -30,6 +38,9 @@ struct MastermindGamePlayView: View {
                 },
                 onAllFilled: { isComplete in
                     isValidateButtonEnabled = isComplete
+                },
+                onCharacterCleared: { index in
+                    viewModel.clearCharacterState(at: index)
                 },
                 readOnly: false
             )
@@ -42,6 +53,7 @@ struct MastermindGamePlayView: View {
             .disabled(!isValidateButtonEnabled)
             .customButtonStyle()
         }
+        .onAppear(perform: viewModel.onAppear)
         .padding([.vertical, .horizontal])
         .gradientBackground()
     }

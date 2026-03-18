@@ -5,7 +5,7 @@
 //  Created by Stijn Ergeerts on 16/03/2026.
 //
 
-enum CharacterState: Equatable {
+enum CharacterState: Equatable, Hashable {
     case neutral(Character)
     case correct(Character)
     case contains(Character)
