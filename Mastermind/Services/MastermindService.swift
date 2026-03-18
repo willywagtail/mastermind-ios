@@ -13,7 +13,7 @@ enum MastermindServiceError: Error {
 
 }
 
-protocol MastermingLifecycleServicing {
+protocol MastermindLifecycleServicing {
     func newGame() throws -> MastermindGame
     func stopGame() -> ValidationResult
 }
@@ -22,7 +22,7 @@ protocol MastermindValidationServicing {
     func validate(guess: String) throws -> ValidationResult
 }
 
-typealias MastermindServicing = MastermingLifecycleServicing & MastermindValidationServicing
+typealias MastermindServicing = MastermindLifecycleServicing & MastermindValidationServicing
 
 // MARK: - Mastermind Service
 

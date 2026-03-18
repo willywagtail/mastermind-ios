@@ -18,13 +18,13 @@ class MastermindGameStateViewModel: ObservableObject {
     // MARK: - Properties
     
     let factory: MastermindFactoring
-    private let mastermindLifecycleService: MastermingLifecycleServicing
+    private let mastermindLifecycleService: MastermindLifecycleServicing
     
     // MARK: - Lifecycle
     
     init(
         factory: MastermindFactoring,
-        mastermindLifecycleService: MastermingLifecycleServicing
+        mastermindLifecycleService: MastermindLifecycleServicing
     ) {
         self.factory = factory
         self.mastermindLifecycleService = mastermindLifecycleService

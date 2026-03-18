@@ -9,7 +9,7 @@ class Factory {
     static let shared = Factory()
     
     lazy var configuration: Configuring = { Configuration() }()
-    lazy var mastermindLifecycleService: MastermingLifecycleServicing = { mastermindService }()
+    lazy var mastermindLifecycleService: MastermindLifecycleServicing = { mastermindService }()
     lazy var mastermindValidationService: MastermindValidationServicing = { mastermindService }()
     lazy var randomCharacterGenerator: RandomCharacterGenerating = { RandomCharacterGenerator() }()
     
