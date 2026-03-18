@@ -132,7 +132,7 @@ struct MastermindGamePlayViewModelTests {
     }
     
     @Test func validateTapped_whenServiceThrows_doesNotUpdateDisplayStates() {
-        mockService.validateError = MastermindServiceError.validationFailed
+        mockService.validateError = MastermindServiceError.gameNotFound
         let sut = makeSUT(onGameEnded: { _ in })
         let originalStates = sut.displayStates
         sut.updateInputCharacters(["A", "B", "C", "D"])
