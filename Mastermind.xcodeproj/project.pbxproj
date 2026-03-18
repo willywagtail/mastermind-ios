@@ -14,19 +14,11 @@
 			remoteGlobalIDString = 106568C72F66AED8000681B4;
 			remoteInfo = Mastermind;
 		};
-		106568E02F66AEDB000681B4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 106568C02F66AED8000681B4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 106568C72F66AED8000681B4;
-			remoteInfo = Mastermind;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		106568C82F66AED8000681B4 /* Mastermind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mastermind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		106568D52F66AEDB000681B4 /* MastermindTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MastermindTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		106568DF2F66AEDB000681B4 /* MastermindUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MastermindUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -57,13 +49,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		106568DC2F66AEDB000681B4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -81,7 +66,6 @@
 			children = (
 				106568C82F66AED8000681B4 /* Mastermind.app */,
 				106568D52F66AEDB000681B4 /* MastermindTests.xctest */,
-				106568DF2F66AEDB000681B4 /* MastermindUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -135,26 +119,6 @@
 			productReference = 106568D52F66AEDB000681B4 /* MastermindTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		106568DE2F66AEDB000681B4 /* MastermindUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 106568EF2F66AEDB000681B4 /* Build configuration list for PBXNativeTarget "MastermindUITests" */;
-			buildPhases = (
-				106568DB2F66AEDB000681B4 /* Sources */,
-				106568DC2F66AEDB000681B4 /* Frameworks */,
-				106568DD2F66AEDB000681B4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				106568E12F66AEDB000681B4 /* PBXTargetDependency */,
-			);
-			name = MastermindUITests;
-			packageProductDependencies = (
-			);
-			productName = MastermindUITests;
-			productReference = 106568DF2F66AEDB000681B4 /* MastermindUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -169,10 +133,6 @@
 						CreatedOnToolsVersion = 26.2;
 					};
 					106568D42F66AEDB000681B4 = {
-						CreatedOnToolsVersion = 26.2;
-						TestTargetID = 106568C72F66AED8000681B4;
-					};
-					106568DE2F66AEDB000681B4 = {
 						CreatedOnToolsVersion = 26.2;
 						TestTargetID = 106568C72F66AED8000681B4;
 					};
@@ -197,7 +157,6 @@
 			targets = (
 				106568C72F66AED8000681B4 /* Mastermind */,
 				106568D42F66AEDB000681B4 /* MastermindTests */,
-				106568DE2F66AEDB000681B4 /* MastermindUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -211,13 +170,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		106568D32F66AEDB000681B4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		106568DD2F66AEDB000681B4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -241,13 +193,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		106568DB2F66AEDB000681B4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -259,11 +204,6 @@
 			isa = PBXTargetDependency;
 			target = 106568C72F66AED8000681B4 /* Mastermind */;
 			targetProxy = 106568D62F66AEDB000681B4 /* PBXContainerItemProxy */;
-		};
-		106568E12F66AEDB000681B4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 106568C72F66AED8000681B4 /* Mastermind */;
-			targetProxy = 106568E02F66AEDB000681B4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -501,44 +441,6 @@
 			};
 			name = Release;
 		};
-		106568F02F66AEDB000681B4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = be.willywagtail.MastermindUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Mastermind;
-			};
-			name = Debug;
-		};
-		106568F12F66AEDB000681B4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = be.willywagtail.MastermindUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Mastermind;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -565,15 +467,6 @@
 			buildConfigurations = (
 				106568ED2F66AEDB000681B4 /* Debug */,
 				106568EE2F66AEDB000681B4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		106568EF2F66AEDB000681B4 /* Build configuration list for PBXNativeTarget "MastermindUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				106568F02F66AEDB000681B4 /* Debug */,
-				106568F12F66AEDB000681B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

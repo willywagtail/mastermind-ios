@@ -166,7 +166,7 @@ struct MastermindServiceTests {
         // C at index 0: not in position, count=2, so .contains, count→1
         // C at index 1: not in position, count=1, so .contains, count→0
         // C at index 2: correct position, already counted in first pass
-        // A at index 3: not in position, count=1 (A appears once), so .contains
+        // A at index 3: not in position, count=1 A appears once, so .contains
         mockConfiguration.numberOfCharacters = 4
         mockConfiguration.allowedCharacters = "ABC"
         mockGenerator.randomResponses = ["A", "B", "C", "C"]

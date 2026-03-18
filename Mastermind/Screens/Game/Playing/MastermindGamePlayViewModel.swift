@@ -19,6 +19,7 @@ class MastermindGamePlayViewModel: ObservableObject {
     
     @Published var displayStates: [CharacterState]
     @Published var remainingSeconds: Int
+    @Published var isValidGuess = false
     
     // MARK: - Properties
     
@@ -28,16 +29,6 @@ class MastermindGamePlayViewModel: ObservableObject {
     private let onGameEnded: (GameResult) -> Void
     private var timerTask: Task<Void, Never>?
     
-    // MARK: - Computed
-    
-    var currentGuess: String {
-        String(inputCharacters)
-    }
-
-    var isValidGuess: Bool {
-        inputCharacters.allSatisfy { !$0.isWhitespace }
-    }
-
     // MARK: - Lifecycle
     
     init(
@@ -65,6 +56,7 @@ class MastermindGamePlayViewModel: ObservableObject {
     
     func updateInputCharacters(_ characters: [Character]) {
         inputCharacters = characters
+        isValidGuess = characters.allSatisfy { !$0.isWhitespace }
     }
     
     func clearCharacterState(at index: Int) {
@@ -74,10 +66,8 @@ class MastermindGamePlayViewModel: ObservableObject {
     
     func validateTapped() {
         guard isValidGuess else { return }
-        let formattedGuess = currentGuess.trimmingCharacters(in: .whitespaces).uppercased()
-        guard formattedGuess.count == displayStates.count else { return }
-        
-        guard let result = try? mastermindValidationService.validate(guess: formattedGuess) else { return }
+        let guess = String(inputCharacters).uppercased()
+        guard let result = try? mastermindValidationService.validate(guess: guess) else { return }
         displayStates = result.states
         
         if result.isSuccess {
@@ -106,4 +96,5 @@ class MastermindGamePlayViewModel: ObservableObject {
         timerTask?.cancel()
         timerTask = nil
     }
+    
 }
