@@ -117,7 +117,10 @@ struct CharacterInputView: View {
         .onChange(of: displayStates) { newStates in
             guard isValidationResult(newStates) else { return }
             letters = newStates.map { $0.character }
-            keyboardActive = false
+            
+            if newStates.allSatisfy(\.isCorrect) {
+                keyboardActive = false
+            }
         }
     }
 

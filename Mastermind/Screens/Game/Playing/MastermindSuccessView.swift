@@ -16,13 +16,13 @@ struct MastermindResultView: View {
     // MARK: - Body
     
     var body: some View {
-        VStack(alignment: .center, spacing: 24) {
+        VStack(alignment: .center, spacing: 30) {
             Spacer()
-                .frame(height: 40)
+                .frame(height: 32)
             
             Text(result.title)
                 .foregroundStyle(.foreground)
-                .font(.system(size: 72, weight: .bold))
+                .font(.system(size: 52, weight: .bold))
                 .multilineTextAlignment(.center)
                 
             Text(result.emoji)

@@ -56,7 +56,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aaargh \\n You Lost!"
+            "value" : "Defeat"
           }
         }
       }
@@ -111,7 +111,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Woohoo! \\n You won!"
+            "value" : "Victory"
           }
         }
       }

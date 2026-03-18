@@ -19,10 +19,14 @@ struct MastermindGameStateView: View {
         Group {
             switch viewModel.gameState {
             case .playing(let mastermindGame):
-                MastermindGamePlayView(viewModel: viewModel.factory.makeMastermindGamePlayViewModel(mastermindGame: mastermindGame,
-                                                                                                    timeExpiredCallback: viewModel.stopGame,
-                                                                                                    validateCallback: viewModel.validateTapped))
-                    .transition(.opacity)
+                MastermindGamePlayView(
+                    viewModel: viewModel.factory.makeMastermindGamePlayViewModel(
+                        mastermindGame: mastermindGame,
+                        onGameEnded: viewModel.handleGameResult
+                    )
+                )
+                .id(mastermindGame)
+                .transition(.opacity)
                 
             case .success(let result):
                 MastermindResultView(didTapPlayAgain: viewModel.restartTapped, result: .success(result))

@@ -13,11 +13,16 @@ enum MastermindServiceError: Error {
     case validationFailed
 }
 
-protocol MastermindServicing {
+protocol MastermingLifecycleServicing {
     func newGame() throws -> MastermindGame
-    func validate(guess: String) throws -> ValidationResult
     func stopGame() -> ValidationResult
 }
+
+protocol MastermindValidationServicing {
+    func validate(guess: String) throws -> ValidationResult
+}
+
+typealias MastermindServicing = MastermingLifecycleServicing & MastermindValidationServicing
 
 // MARK: - Mastermind Service
 
