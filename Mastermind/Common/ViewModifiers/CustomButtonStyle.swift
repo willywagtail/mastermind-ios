@@ -83,7 +83,7 @@ enum ButtonType {
     var foregroundColor: Color {
         switch self {
         case .primary: .foregroundAction
-        case .outline: .foregroundAction
+        case .outline: .foregroundPrimary
         }
     }
     
@@ -97,7 +97,7 @@ enum ButtonType {
     var borderColor: Color {
         switch self {
         case .primary: .clear
-        case .outline: .foregroundAction
+        case .outline: .foregroundPrimary
         }
     }
     

@@ -51,6 +51,7 @@ private struct KeyInputRepresentable: UIViewRepresentable {
         let view = KeyInputView()
         view.onInsert = onInsert
         view.onDelete = onDelete
+        view.accessibilityElementsHidden = true
         return view
     }
 
@@ -88,13 +89,15 @@ struct CharacterInputView: View {
     
     var body: some View {
         ZStack {
-            KeyInputRepresentable(
-                isActive: keyboardActive,
-                onInsert: handleInsert,
-                onDelete: handleDelete
-            )
-            .frame(width: 1, height: 1)
-            .opacity(0)
+            if !readOnly {
+                KeyInputRepresentable(
+                    isActive: keyboardActive,
+                    onInsert: handleInsert,
+                    onDelete: handleDelete
+                )
+                .frame(width: 1, height: 1)
+                .opacity(0)
+            }
 
             HStack(spacing: 12) {
                 ForEach(displayStates.indices, id: \.self) { index in
@@ -129,8 +132,9 @@ struct CharacterInputView: View {
     private func characterBox(at index: Int) -> some View {
         let isFocused = readOnly ? false : focusedIndex == index
         let displayText = letters[index].map { String($0).uppercased() } ?? ""
+        let accessibilityValueText = letters[index].map { String($0).uppercased() } ?? "empty"
 
-        return Text(displayText)
+        let box = Text(displayText)
             .font(.system(size: 24, weight: .semibold))
             .foregroundStyle(.primary)
             .frame(width: 56, height: 56)
@@ -143,8 +147,23 @@ struct CharacterInputView: View {
                         lineWidth: isFocused ? 2 : 1
                     )
             )
+
+        let accessibleBox = box
             .accessibilityLabel(accessibilityLabel(at: index))
-            .accessibilityHint("Character box \(index + 1) of \(displayStates.count)")
+            .accessibilityValue(accessibilityValueText)
+            .accessibilityHint(readOnly ? "" : String(localized: "character_box_accessibility_hint \(index + 1) \(displayStates.count)"))
+            .accessibilityAddTraits(readOnly ? .isStaticText : .isButton)
+        
+        if readOnly {
+            return AnyView(accessibleBox)
+        } else {
+            return AnyView(
+                accessibleBox.accessibilityAction {
+                    focusedIndex = index
+                    keyboardActive = true
+                }
+            )
+        }
     }
 
     // MARK: - Character Handling
@@ -204,16 +223,22 @@ struct CharacterInputView: View {
     }
 
     private func accessibilityLabel(at index: Int) -> String {
+        let position = index + 1
+        let prefix = readOnly
+            ? String(localized: "prefix_solution_accessibility_label \(position)")
+            : String(localized: "prefix_position_accessibility_label \(position)")
+        
         let state = displayStates[index]
         switch state {
-        case .correct(let char): return "Position \(index + 1): \(char), correct"
-        case .contains(let char): return "Position \(index + 1): \(char), present in word"
-        case .notCorrect(let char): return "Position \(index + 1): \(char), not in word"
+        case .correct(let character):
+            return String(localized: "character_box_state_correct_accessibility_label \(prefix) \(String(character))")
+        case .contains(let character):
+            return String(localized: "character_box_state_contains_accessibility_label \(prefix) \(String(character))")
+        case .notCorrect(let character):
+            return String(localized: "character_box_state_not_correct_accessibility_label \(prefix) \(String(character))")
         case .neutral:
-            if let c = letters[index] {
-                return "Position \(index + 1): \(c)"
-            }
-            return "Position \(index + 1): empty"
+            let character = letters[index].map { String($0) } ?? String(localized: "character_box_state_empty_accessibility_label")
+            return String(localized: "character_box_state_neutral_accessibility_label \(prefix) \(character)")
         }
     }
     

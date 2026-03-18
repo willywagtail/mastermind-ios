@@ -27,6 +27,7 @@ struct MastermindGamePlayView: View {
                 remainingSeconds: viewModel.remainingSeconds,
                 totalSeconds: viewModel.totalSeconds
             )
+            .accessibilityHidden(true)
 
             Spacer()
                 .frame(maxHeight: 60)
