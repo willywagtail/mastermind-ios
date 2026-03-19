@@ -45,6 +45,7 @@ class MastermindGamePlayViewModel: ObservableObject {
     }
     
     deinit {
+        print("DEINIT CALLED")
         timerTask?.cancel()
     }
     
@@ -80,13 +81,13 @@ class MastermindGamePlayViewModel: ObservableObject {
     
     private func startTimer() {
         guard timerTask == nil else { return }
-        timerTask = Task {
-            while remainingSeconds > 0, !Task.isCancelled {
+        timerTask = Task { [weak self] in
+            while let self, remainingSeconds > 0, !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(1))
                 guard !Task.isCancelled else { return }
-                remainingSeconds -= 1
+                self.remainingSeconds -= 1
             }
-            if remainingSeconds <= 0, !Task.isCancelled {
+            if let self, remainingSeconds <= 0, !Task.isCancelled {
                 onGameEnded(.timeExpired)
             }
         }
