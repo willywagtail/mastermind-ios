@@ -45,7 +45,6 @@ class MastermindGamePlayViewModel: ObservableObject {
     }
     
     deinit {
-        print("DEINIT CALLED")
         timerTask?.cancel()
     }
     
