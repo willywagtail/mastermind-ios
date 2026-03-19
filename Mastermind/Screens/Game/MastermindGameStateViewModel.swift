@@ -6,19 +6,16 @@
 //
 
 import Foundation
-import Combine
 
 @MainActor
-class MastermindGameStateViewModel: ObservableObject {
-    // MARK: - Published
-    
-    @Published var gameState: GameState = .loading
-    @Published var showAlert = false
-    
+@Observable
+class MastermindGameStateViewModel {
     // MARK: - Properties
     
-    let factory: MastermindFactoring
-    private let mastermindLifecycleService: MastermindLifecycleServicing
+    var gameState: GameState = .loading
+    var showAlert = false
+    @ObservationIgnored let factory: MastermindFactoring
+    @ObservationIgnored private let mastermindLifecycleService: MastermindLifecycleServicing
     
     // MARK: - Lifecycle
     

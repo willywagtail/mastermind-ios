@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 enum GameResult: Equatable {
     case success(ValidationResult)
@@ -14,20 +13,18 @@ enum GameResult: Equatable {
 }
 
 @MainActor
-class MastermindGamePlayViewModel: ObservableObject {
-    // MARK: - Published
-    
-    @Published var displayStates: [CharacterState]
-    @Published var remainingSeconds: Int
-    @Published var isValidGuess = false
-    
+@Observable
+class MastermindGamePlayViewModel {
     // MARK: - Properties
     
-    let totalSeconds: Int
-    private var inputCharacters: [Character]
-    private let mastermindValidationService: MastermindValidationServicing
-    private let onGameEnded: (GameResult) -> Void
-    private var timerTask: Task<Void, Never>?
+    var displayStates: [CharacterState]
+    var remainingSeconds: Int
+    var isValidGuess = false
+    @ObservationIgnored let totalSeconds: Int
+    @ObservationIgnored private var inputCharacters: [Character]
+    @ObservationIgnored private let mastermindValidationService: MastermindValidationServicing
+    @ObservationIgnored private let onGameEnded: (GameResult) -> Void
+    @ObservationIgnored private var timerTask: Task<Void, Never>?
     
     // MARK: - Lifecycle
     

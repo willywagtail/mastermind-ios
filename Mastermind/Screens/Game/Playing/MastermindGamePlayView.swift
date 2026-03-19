@@ -10,7 +10,7 @@ import SwiftUI
 struct MastermindGamePlayView: View {
     // MARK: - ViewModel
     
-    @StateObject var viewModel: MastermindGamePlayViewModel
+    @State var viewModel: MastermindGamePlayViewModel
     
     // MARK: - Body
     

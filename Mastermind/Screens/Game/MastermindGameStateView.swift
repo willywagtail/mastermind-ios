@@ -11,11 +11,12 @@ struct MastermindGameStateView: View {
     
     // MARK: - ViewModel
     
-    @StateObject var viewModel: MastermindGameStateViewModel
+    @State var viewModel: MastermindGameStateViewModel
     
     // MARK: - Body
     
     var body: some View {
+        @Bindable var viewModel = viewModel
         Group {
             switch viewModel.gameState {
             case .playing(let mastermindGame):

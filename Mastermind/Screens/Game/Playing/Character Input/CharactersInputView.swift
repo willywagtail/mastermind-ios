@@ -56,7 +56,7 @@ struct CharacterInputView: View {
             focusedIndex = letters.firstIndex(where: { $0 == nil }) ?? 0
             keyboardActive = !readOnly
         }
-        .onChange(of: displayStates) { newStates in
+        .onChange(of: displayStates) { _, newStates in
             guard newStates.allSatisfy({ !$0.isNeutral }) else { return }
             letters = newStates.map { $0.character }
             
