@@ -104,6 +104,10 @@ struct CharacterInputView: View {
         guard focusedIndex < letters.count,
               let char = text.first(where: \.isLetter) else { return }
 
+        if !displayStates[focusedIndex].isNeutral {
+            onCharacterCleared?(focusedIndex)
+        }
+
         letters[focusedIndex] = Character(char.uppercased())
 
         if focusedIndex + 1 < letters.count {
